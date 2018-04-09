@@ -64,7 +64,10 @@ export class Props {
   /**
    * 双击计时器最大间隔
    */
-  public doubleClickInterval?: number = 175
+  public doubleClickInterval?: number = 175  
+
+
+  public skipDoubleClickOnNoZoom?: boolean = false
 
   /**
    * If provided this will cause the view to zoom and pan to the center point
@@ -87,7 +90,7 @@ export class Props {
   /**
    * 单击的回调
    */
-  public onClick?: () => void = () => {
+  public onClick?: (evt: object, gestureState: object) => void = () => {
     //
   }
 

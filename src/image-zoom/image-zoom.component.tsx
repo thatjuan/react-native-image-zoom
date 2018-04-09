@@ -132,7 +132,7 @@ export default class ImageViewer extends React.Component<Props, State> {
 
         if (evt.nativeEvent.changedTouches.length <= 1) {
           // 一个手指的情况
-          if (
+          if ( this.scale != 1 &&
             new Date().getTime() - this.lastClickTime <
             (this.props.doubleClickInterval || 0)
           ) {
@@ -459,7 +459,10 @@ export default class ImageViewer extends React.Component<Props, State> {
 
         this.imageDidMove("onPanResponderMove")
       },
-      onPanResponderRelease: (evt, gestureState) => {
+      onPanResponderRelease: (evt: any, gestureState) => {
+
+        evt.persist();
+
         // 取消长按
         if (this.longPressTimeout) {
           clearTimeout(this.longPressTimeout)
@@ -486,9 +489,9 @@ export default class ImageViewer extends React.Component<Props, State> {
         ) {
           this.singleClickTimeout = setTimeout(() => {
             if (this.props.onClick) {
-              this.props.onClick()
+              this.props.onClick(evt, gestureState)
             }
-          }, this.props.doubleClickInterval)
+          }, (this.props.skipDoubleClickOnNoZoom && this.scale == 1) ? 0 : this.props.doubleClickInterval)
         } else {
           // 多手势结束，或者滑动结束
           if (this.props.responderRelease) {
