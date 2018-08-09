@@ -517,7 +517,6 @@ export default class ImageViewer extends React.Component<Props, State> {
   public panResponderReleaseResolve = () => {
     // 判断是否是 swipeDown
     if (this.props.enableSwipeDown && this.props.swipeDownThreshold) {
-      console.log( ">>>>>>>>>>",this.swipeDownOffset, this.props.swipeDownThreshold )
       if (this.swipeDownOffset > this.props.swipeDownThreshold) {
         if (this.props.onSwipeDown) {
           this.props.onSwipeDown()
