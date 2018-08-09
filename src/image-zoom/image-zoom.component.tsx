@@ -365,7 +365,7 @@ export default class ImageViewer extends React.Component<Props, State> {
               // swipeDown 不允许在已经有横向偏移量时触发
               if (
                 this.props.enableSwipeDown &&
-                this.horizontalWholeOuterCounter === 0
+                this.horizontalWholeOuterCounter < 30
               ) {
                 // 图片高度小于盒子高度，只能向下拖拽，而且一定是 swipeDown 动作
                 this.swipeDownOffset += diffY
@@ -373,11 +373,11 @@ export default class ImageViewer extends React.Component<Props, State> {
                 // 只要滑动溢出量不小于 0，就可以拖动
                 if (this.swipeDownOffset > 0) {
                   this.positionY += diffY / this.scale
-                  this.animatedPositionY.setValue(this.positionY)
+                  //this.animatedPositionY.setValue(this.positionY)
 
                   // 越到下方，缩放越小
-                  this.scale = this.scale - diffY / 1000
-                  this.animatedScale.setValue(this.scale)
+                  // this.scale = this.scale - diffY / 1000
+                  // this.animatedScale.setValue(this.scale)
                 }
               }
             }
@@ -517,6 +517,7 @@ export default class ImageViewer extends React.Component<Props, State> {
   public panResponderReleaseResolve = () => {
     // 判断是否是 swipeDown
     if (this.props.enableSwipeDown && this.props.swipeDownThreshold) {
+      console.log( ">>>>>>>>>>",this.swipeDownOffset, this.props.swipeDownThreshold )
       if (this.swipeDownOffset > this.props.swipeDownThreshold) {
         if (this.props.onSwipeDown) {
           this.props.onSwipeDown()
